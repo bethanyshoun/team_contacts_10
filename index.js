@@ -1,19 +1,20 @@
+//generate page file
+const generateHTML= require('./src/generateHTML');
+
 //node packages
 const fs = require('fs');
 const inquirer = require('inquirer');
-
-//generate page file
-const generateMarkdown = require('./utils/generateHTML');
 
 //required team classes
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
+
 const teamArray =[];
 
 // team manager prompts
-function addManager() {
+const addManager = () => {
     return inquirer
         .prompt([
             {
@@ -47,70 +48,113 @@ function addManager() {
         })
 };
 
+const addEmployee = () => {
+    console.log(`
+    =========================
+    Add Employees to the Team
+    =========================
+    `);
 
-// TODO: Create an array of questions for user input
-const questions = [
-    {
-        type: 'input',
-        name: 'title',
-        message: 'What is the title of your project?',
-    },
-    {
-        type: 'input',
-        name: 'description',
-        message: 'Enter project description'
-    },
-    {
-        type: 'input',
-        name: 'installation',
-        message: 'Enter installation instructions'
-    },
-    {
-        type: 'input',
-        name: 'usage',
-        message: 'Enter usage information'
-    },
-    {
-        type: 'list',
-        name: 'license',
-        message: 'Select a user license',
-        choices: ['Apache', 'MIT', 'no license']
-    },
-    {
-        type: 'input',
-        name: 'contributing',
-        message: 'Enter contribution guidelines'
-    },
-    {
-        type: 'input',
-        name: 'tests',
-        message: 'Enter test instructions'
-    },
-    {
-        type: 'input',
-        name: 'github',
-        message: 'Enter your GitHub username'
-    },
-    {
-        type: 'input',
-        name: 'email',
-        message: 'Enter your email address'
-    }
-]
-// TODO: Create a function to write README file
-const writeToFile = (fileName, data) => {
-    return fs.writeFileSync(fileName, data)
-}
-
-// TODO: Create a function to initialize app
-const init = () => {
     return inquirer
-        .prompt(questions)
-        .then((data) => {
-            return writeToFile ('./dist/generated-README.md', generateMarkdown(data));
-        })
-        .catch (err => console.log(err));
-}
+        .prompt ([
+            {
+                type: "list",
+                name: "role",
+                message: "Please choose the employee's role",
+                choices: ["Engineer", "Intern"]
+            },
+            {
+                type: "input",
+                name: "name",
+                message: "Enter the Employee's Name"
+            },
+            {
+                type: "input",
+                name: "id",
+                message: "Enter the Employee's ID"
+            },
+            {
+                type: "input",
+                name: "email",
+                message: "Enter the Employee's Email"
+            },
+            {
+                type: "input",
+                name: "github",
+                message: "Enter the Engineer's GitHub Username",
+                when: (input) => input.role === "Engineer",
+                validate: nameInput => {
+                    if (nameInput ) {
+                        return true;
+                    } else {
+                        console.log ("Please enter the engineer's GitHub username!")
+                    }
+                }
+            },
+            {
+                type: "input",
+                name: "school",
+                message: "Enter the Intern's School Name",
+                when: (input) => input.role === "Intern",
+                validate: nameInput => {
+                    if (nameInput) {
+                        return true;
+                    } else {
+                        console.log ("Please enter the intern's school name!")
+                    }
+                }
+            },
+            {
+                type: "confirm",
+                name: "confirmAdd",
+                message: "Would you like to add additional team members?",
+                defauilt: true
+            }
+        ])
+        .then(employeeData => {
+            let { name, id, email, role, github, school, confirmAdd } = employeeData;
+            let employee;
 
-// Function call to initialize app
-init();
+            if (role === "Engineer") {
+                employee = new Engineer (name, id, email, github);
+                console.log(employee);
+            } 
+                else if (role === "Intern") {
+                employee = new Intern (name, id, email, school);
+                console.log(employee);
+                }
+
+            teamArray.push(employee);
+
+            if (confirmAdd) {
+                return addEmployee(teamArray);
+            } 
+                else {
+                 return teamArray;
+                }
+        })
+};
+
+const writeFile = data => {
+    fs.writeFile('./dist/generatedindex.html', data, err => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+            else {
+                console.log("Your team profile has been generated! See it in generatedindex.html!")
+            }
+    })
+};
+
+addManager()
+    .then(addEmployee)
+    .then(teamArray => {
+        return generateHTML(teamArray);
+    })
+    .then(pageHTML => {
+        return writeFile(pageHTML);
+    })
+    .catch(err => {
+        console.log(err);
+    });
