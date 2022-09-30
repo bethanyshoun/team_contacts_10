@@ -1,5 +1,17 @@
-# My Team Manager
+# Team Contacts Profile
 
+
+
+## Table-of-Contents
+* [Description](#description)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Contributing](#contributing)
+* [Tests](#tests)
+* [Questions](#questions)
+
+
+## [Description](#table-of-contents)
 ## User Story and Acceptance Criteria
 ### User Story
 AS A manager
@@ -23,3 +35,31 @@ WHEN I select the intern option
 THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
 WHEN I decide to finish building my team
 THEN I exit the application, and the HTML is generated
+
+This project utilizes node packages, inquirer, jest testing, and the command line to generate contact informaition    for a professional team by entering inputting  responses to questions about specific team member roles to compile their information.
+
+          
+## [Installation](#table-of-contents)
+enter `npm i` in the command line once the project file has been installed.
+
+
+## [Usage](#table-of-contents)
+To run, enter `node index.js` in the command line.
+
+
+## [Contributing](#table-of-contents)
+Not Applicable
+
+
+## [Tests](#table-of-contents)
+Enter `npm test` in the command line to run tests.
+
+
+## [Questions](#table-of-contents)
+View my GitHub repository at
+[bethanyshoun](https://github.com/bethanyshoun/)
+
+Email me at
+bethanyshoun@gmail.com
+
+
