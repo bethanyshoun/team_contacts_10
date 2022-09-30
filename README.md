@@ -8,6 +8,7 @@
 * [Usage](#usage)
 * [Contributing](#contributing)
 * [Tests](#tests)
+* [Walkthrough](#walkthrough)
 * [Questions](#questions)
 
 
@@ -54,12 +55,17 @@ Not Applicable
 ## [Tests](#table-of-contents)
 Enter `npm test` in the command line to run tests.
 
+## [Walkthrough](#table-of-contents)
+See the walkthrough video here: https://drive.google.com/file/d/1eLSUuhz4SzYqUzjZGC3dbqDxozlwjZ2c/view
+
+You will find the HTML file generated in this walkthrough video in the root of the project under "sampleHTML.html"
 
 ## [Questions](#table-of-contents)
 View my GitHub repository at
 [bethanyshoun](https://github.com/bethanyshoun/)
 
-Email me at
-bethanyshoun@gmail.com
+## Acknowledgements
+Utilized several resources including jest documentation, bootcamp modules, tutoring advice, and other search features to find ways to refactor and fix code. 
+
 
 
